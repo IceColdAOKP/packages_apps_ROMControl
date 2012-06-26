@@ -23,11 +23,13 @@ public class Led extends AOKPPreferenceFragment implements OnPreferenceChangeLis
     private static final String PREF_LED_ON = "led_on";
     private static final String PREF_COLOR_PICKER = "led_color";
     private static final String PREF_LED_SCREEN_ON = "led_screen_on";
+    private static final String PREF_USE_BLN = "use_bln";
 
     ListPreference mLedOffTime;
     ListPreference mLedOnTime;
     ColorPickerPreference mColorPicker;
     CheckBoxPreference mLedScreenOn;
+    CheckBoxPreference mUseBln;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,9 +65,12 @@ public class Led extends AOKPPreferenceFragment implements OnPreferenceChangeLis
         mColorPicker = (ColorPickerPreference) findPreference(PREF_COLOR_PICKER);
         mColorPicker.setOnPreferenceChangeListener(this);
 
-				mLedScreenOn = (CheckBoxPreference) findPreference(PREF_LED_SCREEN_ON);
-				mLedScreenOn.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(),
+        mLedScreenOn = (CheckBoxPreference) findPreference(PREF_LED_SCREEN_ON);
+        mLedScreenOn.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(),
 					Settings.Secure.LED_SCREEN_ON, 0) == 1);
+        mUseBln = (CheckBoxPreference) findPreference(PREF_USE_BLN);
+		mUseBln.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.NOTIFICATION_USE_BUTTON_BACKLIGHT, 0) == 1);
 
     }
 
@@ -81,7 +86,11 @@ public class Led extends AOKPPreferenceFragment implements OnPreferenceChangeLis
 							Settings.Secure.LED_SCREEN_ON, checked ? 1 : 0);
 						Log.i(TAG, "LED flash when screen ON is set to: " + checked);
 						return true;
-				}
+				} else if (preference == mUseBln) {
+                        boolean checked = ((CheckBoxPreference) preference).isChecked();
+                        Settings.System.putInt(getActivity().getContentResolver(),
+                            Settings.System.NOTIFICATION_USE_BUTTON_BACKLIGHT, checked ? 1 : 0);
+                }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
