@@ -330,6 +330,7 @@
         <item>ikon ile birlikte metin</item>
         <item>Ortasında metin ile birlikte ikon</item>
         <item>Yüzdeli Mod</item>
+        <item>Honeycomb</item>
         <item>Gizle</item>
     </string-array>
     <string-array name="battery_icon_values">

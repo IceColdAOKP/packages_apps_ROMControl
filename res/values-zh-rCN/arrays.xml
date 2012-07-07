@@ -190,6 +190,7 @@
         <item>图标加文字</item>
         <item>文字在图标中间</item>
         <item>圆圈</item>
+        <item>Honeycomb</item>
         <item>隐藏</item>
     </string-array>
     <string-array name="battery_bar_entries">
